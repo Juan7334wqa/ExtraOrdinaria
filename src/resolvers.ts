@@ -11,8 +11,7 @@ const COLLECTION_OWNED_POKEMONS = "ownedPokemons";
 
 const trainersCollection = () => getDB().collection<Trainer>(COLLECTION_TRAINERS);
 const pokemonsCollection = () => getDB().collection<Pokemon>(COLLECTION_POKEMONS);
-const ownedPokemonsCollection = () =>
-  getDB().collection<OwnedPokemon>(COLLECTION_OWNED_POKEMONS);
+const ownedPokemonsCollection = () => getDB().collection<OwnedPokemon>(COLLECTION_OWNED_POKEMONS);
 
 const randomStat = () => {
   return Math.floor(Math.random() * 100) + 1;
@@ -31,9 +30,7 @@ export const resolvers: IResolvers = {
     me: async (_: unknown, __: unknown, { user }: Context) => {
       if (!user || !user._id) return null;
 
-      return await trainersCollection().findOne({
-        _id: user._id,
-      });
+      return await trainersCollection().findOne({_id: user._id,});
     },
 
     pokemons: async (
@@ -45,11 +42,7 @@ export const resolvers: IResolvers = {
       const localSize = size || 10;
       const skip = (localPage - 1) * localSize;
 
-      return await pokemonsCollection()
-        .find()
-        .skip(skip)
-        .limit(localSize)
-        .toArray();
+      return await pokemonsCollection().find().skip(skip).limit(localSize).toArray();
     },
 
     pokemon: async (_: unknown, { id }: { id: string }) => {
@@ -121,6 +114,7 @@ export const resolvers: IResolvers = {
       },
       { user }: Context
     ) => {
+
       requireAuth(user);
 
       const result = await pokemonsCollection().insertOne({
@@ -147,6 +141,7 @@ export const resolvers: IResolvers = {
       { pokemonId, nickname }: { pokemonId: string; nickname?: string },
       { user }: Context
     ) => {
+
       const trainer = requireAuth(user);
 
       if (!trainer._id) {
@@ -285,7 +280,6 @@ export const resolvers: IResolvers = {
       if (!parent.pokemons || parent.pokemons.length === 0) {
         return [];
       }
-
 
 
 

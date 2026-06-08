@@ -8,19 +8,13 @@ const start = async () => {
 
   await connectToMongoDB();
 
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: async ({ req }) => {
+  const server = new ApolloServer({typeDefs,resolvers,context: async ({ req }) => {
 
       const token = req.headers.authorization || "";
 
-
       const user = token ? await getUserFromToken(token as string) : null;
 
-      return {
-        user,
-      };
+      return {user};
     },
   });
 
