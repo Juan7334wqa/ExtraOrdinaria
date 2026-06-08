@@ -5,7 +5,7 @@ dotenv.config();
 
 let client: MongoClient;
 let dB: Db;
-const dbName = "Final";
+const dbName = "ExtraFinal";
 export const connectToMongoDB = async () => {
   try {
 
